@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Sentiment Analysis</h1>
+        <p>Enter the text to analyze</p>
+
+        <form method="POST">
+            <textarea name="text" placeholder="Type here" required>{{ user_input if user_input else '' }}</textarea>
+            <button type="submit">Analyze Sentiment</button>
+        </form>
+
+        {% if user_input %}
+            <h2>Sentiment Results</h2>
+            <p>
+                <strong>Naïve Bayes Sentiment:</strong> 
+                <span class="{{ 'positive' if nb_result == 'positive' else 
+                               'negative' if nb_result == 'negative' else 
+                               'neutral' if nb_result == 'neutral' else 
+                               'mixed' }}">
+                    {{ nb_result }}
+                </span>
+            </p>
+            <p>
+                <strong>SVM Sentiment:</strong> 
+                <span class="{{ 'positive' if svm_result == 'positive' else 
+                               'negative' if svm_result == 'negative' else 
+                               'neutral' if svm_result == 'neutral' else 
+                               'mixed' }}">
+                    {{ svm_result }}
+                </span>
+            </p>
+
+            <!-- Sentiment Scale -->
+            <div class="scale-container">
+                <div class="scale">
+                    <div class="pointer" style="left: {{ sentiment_score }}%;"></div>
+                </div>
+                <div class="scale-labels">
+                    <span class="negative-label">Negative</span>
+                    <span class="neutral-label">Neutral</span>
+                    <span class="positive-label">Positive</span>
+                </div>
+            </div>
+
+            <h2>Performance Metrics</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Naïve Bayes</th>
+                        <th>Support Vector Machine</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Accuracy</td>
+                        <td>{{ nb_accuracy if nb_accuracy else '-' }}</td>
+                        <td>{{ svm_accuracy if svm_accuracy else '-' }}</td>
+                    </tr>
+                    <tr>
+                        <td>Precision</td>
+                        <td>{{ nb_precision if nb_precision else '-' }}</td>
+                        <td>{{ svm_precision if svm_precision else '-' }}</td>
+                    </tr>
+                    <tr>
+                        <td>Recall</td>
+                        <td>{{ nb_recall if nb_recall else '-' }}</td>
+                        <td>{{ svm_recall if svm_recall else '-' }}</td>
+                    </tr>
+                    <tr>
+                        <td>F1 Score</td>
+                        <td>{{ nb_f1 if nb_f1 else '-' }}</td>
+                        <td>{{ svm_f1 if svm_f1 else '-' }}</td>
+                    </tr>
+                    <tr>
+                        <td>Processing Time (s)</td>
+                        <td>{{ nb_time if nb_time else '-' }}</td>
+                        <td>{{ svm_time if svm_time else '-' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+</body>
+</html>

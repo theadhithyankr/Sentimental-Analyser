@@ -77,5 +77,5 @@ Feel free to fork and improve the project! PRs are welcome. 😊
 ---
 
 ## 👨‍💻 Author
-- **Your Name** – [GitHub Profile](https://github.com/theadhithyankr)
+ [GitHub Profile](https://github.com/theadhithyankr)
 
